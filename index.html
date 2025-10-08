@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tab Timer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="theme-toggle">
+        <label class="toggle-switch">
+            <input type="checkbox" id="theme-toggle">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <div class="timer-container">
+        <button id="start-pause-btn" class="control-btn">Start</button>
+        <div class="timer-display">
+            <span class="digit-group" data-group="hours" tabindex="0">00</span>
+            <span class="separator">:</span>
+            <span class="digit-group" data-group="minutes" tabindex="0">00</span>
+            <span class="separator">:</span>
+            <span class="digit-group" data-group="seconds" tabindex="0">00</span>
+        </div>
+    </div>
+
+    <audio id="gong-sound" preload="auto">
+        <source src="gong.mp3" type="audio/mpeg">
+        <source src="gong.wav" type="audio/wav">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
