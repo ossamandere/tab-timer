@@ -236,6 +236,10 @@ class TabTimer {
             this.updateTimeFromTotal();
             this.updateDisplay();
 
+            if (this.totalSeconds > 0 && this.totalSeconds <= 10) {
+                this.playBeep();
+            }
+
             if (this.totalSeconds <= 0) {
                 this.completeTimer();
             }
@@ -265,6 +269,10 @@ class TabTimer {
             this.totalSeconds--;
             this.updateTimeFromTotal();
             this.updateDisplay();
+
+            if (this.totalSeconds > 0 && this.totalSeconds <= 10) {
+                this.playBeep();
+            }
 
             if (this.totalSeconds <= 0) {
                 this.completeTimer();
@@ -304,16 +312,11 @@ class TabTimer {
     }
 
     playGong() {
-        try {
-            if (this.gongSound.src) {
-                this.gongSound.currentTime = 0;
-                this.gongSound.play();
-            } else {
-                this.playsyntheticGong();
-            }
-        } catch (error) {
+        this.gongSound.currentTime = 0;
+        this.gongSound.play().catch(error => {
+            console.log('Could not play gong sound file, using synthetic sound:', error);
             this.playsyntheticGong();
-        }
+        });
     }
 
     playsyntheticGong() {
@@ -337,6 +340,30 @@ class TabTimer {
             oscillator.stop(audioContext.currentTime + 2);
         } catch (error) {
             console.log('Could not play gong sound:', error);
+        }
+    }
+
+    playBeep() {
+        try {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+
+            gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.15, audioContext.currentTime + 0.01);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.1);
+        } catch (error) {
+            console.log('Could not play beep sound:', error);
         }
     }
 
