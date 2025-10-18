@@ -197,7 +197,7 @@ class TabTimer {
     }
 
     toggleTimer() {
-        if (!this.isRunning) {
+        if (!this.isRunning || this.isPaused) {
             this.startTimer();
         } else {
             this.pauseTimer();
@@ -210,7 +210,9 @@ class TabTimer {
             this.clearSelection();
         }
 
-        this.totalSeconds = this.hours * 3600 + this.minutes * 60 + this.seconds;
+        if (!this.isPaused) {
+            this.totalSeconds = this.hours * 3600 + this.minutes * 60 + this.seconds;
+        }
 
         if (this.totalSeconds === 0) return;
 
