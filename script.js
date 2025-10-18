@@ -23,6 +23,7 @@ class TabTimer {
         this.secondsElement = document.querySelector('[data-group="seconds"]');
         this.gongSound = document.getElementById('gong-sound');
         this.themeToggle = document.getElementById('theme-toggle');
+        this.hiddenInput = document.getElementById('hidden-input');
 
         this.digitGroups = [this.hoursElement, this.minutesElement, this.secondsElement];
     }
@@ -48,6 +49,9 @@ class TabTimer {
         document.addEventListener('keydown', (e) => this.handleKeyDown(e));
         document.addEventListener('click', (e) => this.handleDocumentClick(e));
 
+        this.hiddenInput.addEventListener('input', (e) => this.handleHiddenInput(e));
+        this.hiddenInput.addEventListener('blur', () => this.handleHiddenInputBlur());
+
         window.matchMedia('(prefers-color-scheme: dark)').addListener((e) => {
             if (!localStorage.getItem('theme')) {
                 this.themeToggle.checked = e.matches;
@@ -69,6 +73,9 @@ class TabTimer {
         this.currentEditingGroup = element;
         element.classList.add('selected');
         this.tempInput = '';
+
+        this.hiddenInput.value = '';
+        this.hiddenInput.focus();
     }
 
     clearSelection() {
@@ -138,6 +145,24 @@ class TabTimer {
             this.finalizeTempInput();
         } else {
             this.updateTempDisplay();
+        }
+    }
+
+    handleHiddenInput(e) {
+        const value = e.target.value;
+        const lastChar = value.slice(-1);
+
+        if (/^\d$/.test(lastChar) && this.currentEditingGroup) {
+            this.handleDigitInput(lastChar);
+        }
+
+        this.hiddenInput.value = '';
+    }
+
+    handleHiddenInputBlur() {
+        if (this.currentEditingGroup) {
+            this.finalizeTempInput();
+            this.clearSelection();
         }
     }
 
