@@ -102,6 +102,13 @@ input:checked + .slider:before {
     justify-content: center;
 }
 
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    align-items: center;
+}
+
 .control-btn {
     background-color: var(--button-bg);
     color: var(--button-text);
@@ -123,6 +130,12 @@ input:checked + .slider:before {
 .control-btn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+}
+
+.secondary-btn {
+    font-size: clamp(1.5rem, 4vw, 6rem);
+    min-width: 180px;
+    padding: 1.5vh 3vw;
 }
 
 .timer-display {
@@ -176,10 +189,17 @@ input:checked + .slider:before {
         gap: 5vh;
     }
 
-    .control-btn {
+    .controls {
         order: 2;
+    }
+
+    .control-btn {
         min-width: 150px;
         padding: 1.5vh 3vw;
+    }
+
+    .secondary-btn {
+        min-width: 140px;
     }
 
     .timer-display {

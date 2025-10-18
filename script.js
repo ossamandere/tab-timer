@@ -4,6 +4,9 @@ class TabTimer {
         this.minutes = 0;
         this.seconds = 0;
         this.totalSeconds = 0;
+        this.initialHours = 0;
+        this.initialMinutes = 0;
+        this.initialSeconds = 0;
         this.isRunning = false;
         this.isPaused = false;
         this.intervalId = null;
@@ -18,6 +21,8 @@ class TabTimer {
 
     initializeElements() {
         this.startPauseBtn = document.getElementById('start-pause-btn');
+        this.restartBtn = document.getElementById('restart-btn');
+        this.clearBtn = document.getElementById('clear-btn');
         this.hoursElement = document.querySelector('[data-group="hours"]');
         this.minutesElement = document.querySelector('[data-group="minutes"]');
         this.secondsElement = document.querySelector('[data-group="seconds"]');
@@ -39,6 +44,8 @@ class TabTimer {
 
     bindEvents() {
         this.startPauseBtn.addEventListener('click', () => this.toggleTimer());
+        this.restartBtn.addEventListener('click', () => this.restartTimer());
+        this.clearBtn.addEventListener('click', () => this.clearTimer());
         this.themeToggle.addEventListener('change', () => this.toggleTheme());
 
         this.digitGroups.forEach(group => {
@@ -212,6 +219,9 @@ class TabTimer {
 
         if (!this.isPaused) {
             this.totalSeconds = this.hours * 3600 + this.minutes * 60 + this.seconds;
+            this.initialHours = this.hours;
+            this.initialMinutes = this.minutes;
+            this.initialSeconds = this.seconds;
         }
 
         if (this.totalSeconds === 0) return;
@@ -219,6 +229,7 @@ class TabTimer {
         this.isRunning = true;
         this.isPaused = false;
         this.startPauseBtn.textContent = 'Pause';
+        this.updateButtonVisibility();
 
         this.intervalId = setInterval(() => {
             this.totalSeconds--;
@@ -237,6 +248,45 @@ class TabTimer {
         clearInterval(this.intervalId);
     }
 
+    restartTimer() {
+        clearInterval(this.intervalId);
+
+        this.hours = this.initialHours;
+        this.minutes = this.initialMinutes;
+        this.seconds = this.initialSeconds;
+        this.totalSeconds = this.hours * 3600 + this.minutes * 60 + this.seconds;
+
+        this.isRunning = true;
+        this.isPaused = false;
+        this.startPauseBtn.textContent = 'Pause';
+        this.updateDisplay();
+
+        this.intervalId = setInterval(() => {
+            this.totalSeconds--;
+            this.updateTimeFromTotal();
+            this.updateDisplay();
+
+            if (this.totalSeconds <= 0) {
+                this.completeTimer();
+            }
+        }, 1000);
+    }
+
+    clearTimer() {
+        clearInterval(this.intervalId);
+
+        this.isRunning = false;
+        this.isPaused = false;
+        this.hours = 0;
+        this.minutes = 0;
+        this.seconds = 0;
+        this.totalSeconds = 0;
+
+        this.startPauseBtn.textContent = 'Start';
+        this.updateDisplay();
+        this.updateButtonVisibility();
+    }
+
     completeTimer() {
         this.isRunning = false;
         this.isPaused = false;
@@ -248,6 +298,7 @@ class TabTimer {
         this.seconds = 0;
         this.totalSeconds = 0;
         this.updateDisplay();
+        this.updateButtonVisibility();
 
         this.playGong();
     }
@@ -303,6 +354,16 @@ class TabTimer {
 
     formatTwoDigits(num) {
         return num.toString().padStart(2, '0');
+    }
+
+    updateButtonVisibility() {
+        if (this.isRunning || this.isPaused) {
+            this.restartBtn.style.display = 'block';
+            this.clearBtn.style.display = 'block';
+        } else {
+            this.restartBtn.style.display = 'none';
+            this.clearBtn.style.display = 'none';
+        }
     }
 }
 
