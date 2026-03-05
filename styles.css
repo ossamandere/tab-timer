@@ -97,7 +97,7 @@ input:checked + .slider:before {
 .timer-container {
     display: flex;
     align-items: center;
-    gap: 3vw;
+    gap: 3vh;
     width: 100%;
     justify-content: center;
 }
