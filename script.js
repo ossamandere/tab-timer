@@ -236,6 +236,7 @@ class TabTimer {
             this.totalSeconds--;
             this.updateTimeFromTotal();
             this.updateDisplay();
+            document.title = `${this.formatTwoDigits(this.hours)}:${this.formatTwoDigits(this.minutes)}:${this.formatTwoDigits(this.seconds)} - Tab Timer`;
 
             if (this.totalSeconds > 0 && this.totalSeconds <= 10) {
                 this.playBeep();
@@ -251,6 +252,7 @@ class TabTimer {
         this.isPaused = true;
         this.startPauseBtn.textContent = 'Start';
         clearInterval(this.intervalId);
+        document.title = 'Tab Timer';
     }
 
     restartTimer() {
@@ -270,6 +272,7 @@ class TabTimer {
             this.totalSeconds--;
             this.updateTimeFromTotal();
             this.updateDisplay();
+            document.title = `${this.formatTwoDigits(this.hours)}:${this.formatTwoDigits(this.minutes)}:${this.formatTwoDigits(this.seconds)} - Tab Timer`;
 
             if (this.totalSeconds > 0 && this.totalSeconds <= 10) {
                 this.playBeep();
@@ -308,6 +311,7 @@ class TabTimer {
         this.totalSeconds = 0;
         this.updateDisplay();
         this.updateButtonVisibility();
+        document.title = 'Tab Timer';
 
         this.playGong();
     }
@@ -378,7 +382,6 @@ class TabTimer {
         this.hoursElement.textContent = this.formatTwoDigits(this.hours);
         this.minutesElement.textContent = this.formatTwoDigits(this.minutes);
         this.secondsElement.textContent = this.formatTwoDigits(this.seconds);
-        document.title = `${this.formatTwoDigits(this.hours)}:${this.formatTwoDigits(this.minutes)}:${this.formatTwoDigits(this.seconds)} - Tab Timer`;
     }
 
     formatTwoDigits(num) {
