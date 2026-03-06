@@ -96,7 +96,7 @@ input:checked + .slider:before {
 
 .timer-container {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 3vh;
     width: 100%;
     max-width: 95vw;
@@ -142,7 +142,7 @@ input:checked + .slider:before {
 .timer-display {
     display: flex;
     align-items: center;
-    font-size: clamp(4rem, 10vw, 12rem);
+    font-size: clamp(4rem, 12vw, 16rem);
     font-weight: bold;
     line-height: 1;
     user-select: none;
@@ -188,17 +188,13 @@ input:checked + .slider:before {
 
 @media (max-width: 768px) {
     .timer-container {
-        flex-direction: column;
         gap: 5vh;
-    }
-
-    .controls {
-        order: 2;
     }
 
     .control-btn {
         min-width: 150px;
         padding: 1.5vh 3vw;
+        font-size: 1.5rem;
     }
 
     .secondary-btn {
@@ -206,6 +202,6 @@ input:checked + .slider:before {
     }
 
     .timer-display {
-        order: 1;
+        font-size: clamp(3rem, 8vw, 4rem);
     }
 }

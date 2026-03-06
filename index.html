@@ -15,17 +15,17 @@
     </div>
 
     <div class="timer-container">
-        <div class="controls">
-            <button id="start-pause-btn" class="control-btn">Start</button>
-            <button id="restart-btn" class="control-btn secondary-btn" style="display: none;">Restart</button>
-            <button id="clear-btn" class="control-btn secondary-btn" style="display: none;">Clear</button>
-        </div>
         <div class="timer-display">
             <span class="digit-group" data-group="hours" tabindex="0">00</span>
             <span class="separator">:</span>
             <span class="digit-group" data-group="minutes" tabindex="0">00</span>
             <span class="separator">:</span>
             <span class="digit-group" data-group="seconds" tabindex="0">00</span>
+        </div>
+        <div class="controls">
+            <button id="start-pause-btn" class="control-btn">Start</button>
+            <button id="restart-btn" class="control-btn secondary-btn" style="display: none;">Restart</button>
+            <button id="clear-btn" class="control-btn secondary-btn" style="display: none;">Clear</button>
         </div>
         <input type="tel" id="hidden-input" inputmode="numeric" pattern="[0-9]*" autocomplete="off" aria-hidden="true">
     </div>
