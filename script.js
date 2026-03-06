@@ -114,7 +114,10 @@ class TabTimer {
         if (e.key === 'Enter') {
             if (this.currentEditingGroup) {
                 this.finalizeTempInput();
-                this.clearSelection();
+            }
+            this.clearSelection();
+            if (!this.isRunning && this.totalSeconds > 0) {
+                this.startTimer();
             }
             return;
         }
