@@ -378,6 +378,7 @@ class TabTimer {
         this.hoursElement.textContent = this.formatTwoDigits(this.hours);
         this.minutesElement.textContent = this.formatTwoDigits(this.minutes);
         this.secondsElement.textContent = this.formatTwoDigits(this.seconds);
+        document.title = `${this.formatTwoDigits(this.hours)}:${this.formatTwoDigits(this.minutes)}:${this.formatTwoDigits(this.seconds)} - Tab Timer`;
     }
 
     formatTwoDigits(num) {
