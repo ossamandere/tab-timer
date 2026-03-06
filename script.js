@@ -116,9 +116,7 @@ class TabTimer {
                 this.finalizeTempInput();
             }
             this.clearSelection();
-            if (!this.isRunning && this.totalSeconds > 0) {
-                this.startTimer();
-            }
+            this.startTimer();
             return;
         }
 
